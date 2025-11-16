@@ -5,6 +5,7 @@ import Landing from './Landing';
 import Login from './Login';
 import Register from './Register';
 import Dashboard from './Dashboard';
+import Profile from './Profile';
 import './App.css';
 
 const loginVariants = {
@@ -29,6 +30,12 @@ const landingVariants = {
   initial: { opacity: 0, y: -100 },
   in: { opacity: 1, y: 0 },
   out: { opacity: 0, y: 100 }
+};
+
+const profileVariants = {
+  initial: { opacity: 0, x: 100 },
+  in: { opacity: 1, x: 0 },
+  out: { opacity: 0, x: -100 }
 };
 
 const LoadingComponent = () => (
@@ -57,6 +64,7 @@ function App() {
         <Route path="/login" element={<motion.div variants={loginVariants} initial="initial" animate="in" exit="out" transition={{ type: "tween", ease: "easeInOut", duration: 0.6 }}><Login /></motion.div>} />
         <Route path="/register" element={<motion.div variants={registerVariants} initial="initial" animate="in" exit="out" transition={{ type: "tween", ease: "easeInOut", duration: 0.6 }}><Register /></motion.div>} />
         <Route path="/dashboard" element={<motion.div variants={dashboardVariants} initial="initial" animate="in" exit="out" transition={{ type: "tween", ease: "easeInOut", duration: 0.6 }}><Dashboard /></motion.div>} />
+        <Route path="/profile" element={<motion.div variants={profileVariants} initial="initial" animate="in" exit="out" transition={{ type: "tween", ease: "easeInOut", duration: 0.6 }}><Profile /></motion.div>} />
         </Routes>
       </AnimatePresence>
     </>

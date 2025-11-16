@@ -25,8 +25,15 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <div className="form-section">
+    <>
+      {loading && (
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Logging in...</p>
+        </div>
+      )}
+      <div className="login-container">
+        <div className="form-section">
         <img src="/header.png" alt="Logo" className="logo" />
         <h2>Login</h2>
         {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -53,6 +60,7 @@ function Login() {
         <img src="/placeholder2.jpg" alt="Finance Tracker Illustration" />
       </div>
     </div>
+    </>
   );
 }
 

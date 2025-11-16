@@ -27,7 +27,7 @@ function Register() {
       setLoading(true);
       setError('');
       await authAPI.signup(email, password, name);
-      navigate('/dashboard');
+      navigate('/login');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed');
     } finally {

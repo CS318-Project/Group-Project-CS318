@@ -10,7 +10,7 @@ description = 'A Spring Boot application for tracking and reporting personal inc
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+		languageVersion = JavaLanguageVersion.of(18)
 	}
 }
 
