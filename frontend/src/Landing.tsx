@@ -6,8 +6,8 @@ const WAVY_COLORS = ["#22d3ee", "#4ade80", "#2563eb"];
 function Landing() {
   return (
     <WavyBackground 
-      className="w-full h-full flex flex-col"
-      containerClassName="h-screen overflow-hidden"
+      className="w-full flex-grow flex flex-col"
+      containerClassName="justify-start"
       backgroundFill="black"
       colors={WAVY_COLORS}
       waveOpacity={0.5}
@@ -30,7 +30,7 @@ function Landing() {
       </nav>
 
       {/* Hero Content */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center px-4 pb-20">
+      <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
         <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-slate-700 bg-slate-900/50 backdrop-blur-md text-slate-300 text-sm font-medium">
            Smart Financial Management
         </div>

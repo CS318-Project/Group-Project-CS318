@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { authAPI } from './api';
 import { Lock, AlertTriangle, Camera, Edit2, User as UserIcon, Mail } from 'lucide-react';
 import { User } from './types';
+import { ModeToggle } from "@/components/mode-toggle";
 
 function Profile() {
   const navigate = useNavigate();
@@ -163,8 +164,8 @@ function Profile() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen w-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black flex flex-col items-center justify-center py-12">
-      <div className="w-full max-w-2xl p-8 bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-800/50 shadow-2xl mx-4">
+    <div className="min-h-screen w-full bg-slate-50 dark:bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-slate-950 dark:to-black flex flex-col items-center justify-center py-12 transition-colors">
+      <div className="w-full max-w-2xl p-8 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800/50 shadow-2xl mx-4 transition-colors">
         <header className="flex flex-col items-center mb-12">
           <div className="relative group cursor-default">
             <div className="w-24 h-24 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-full flex items-center justify-center text-4xl font-bold text-white mb-6 shadow-xl shadow-emerald-500/20 overflow-hidden">
@@ -176,70 +177,62 @@ function Profile() {
             </div>
           </div>
 
-          <h2 className="text-3xl font-bold text-white mb-2">{user.firstname} {user.lastname}</h2>
-          <p className="text-slate-400 mb-6">{user.email}</p>
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{user.firstname} {user.lastname}</h2>
+          <p className="text-slate-500 dark:text-slate-400 mb-6">{user.email}</p>
         </header>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-slate-900/60 backdrop-blur-xl p-8 rounded-3xl border border-slate-800/60 shadow-xl">
-            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-emerald-400">👤</span>
+          <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl p-8 rounded-3xl border border-slate-200 dark:border-slate-800/60 shadow-xl transition-colors">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+              <span className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-emerald-500 dark:text-emerald-400">👤</span>
               Profile Information
             </h3>
             <div className="space-y-4">
-              <div className="p-4 bg-slate-800/40 rounded-xl border border-slate-700/30">
-                <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">Full Name</p>
-                <p className="text-white font-medium text-lg">{user.firstname} {user.lastname}</p>
+              <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-700/30 transition-colors">
+                <p className="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider mb-1">Full Name</p>
+                <p className="text-slate-900 dark:text-white font-medium text-lg">{user.firstname} {user.lastname}</p>
               </div>
-              <div className="p-4 bg-slate-800/40 rounded-xl border border-slate-700/30">
-                <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">Email Address</p>
-                <p className="text-white font-medium text-lg">{user.email}</p>
+              <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-700/30 transition-colors">
+                <p className="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider mb-1">Email Address</p>
+                <p className="text-slate-900 dark:text-white font-medium text-lg">{user.email}</p>
               </div>
-              <div className="p-4 bg-slate-800/40 rounded-xl border border-slate-700/30">
-                <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">Member Since</p>
-                <p className="text-white font-medium text-lg">
+              <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-700/30 transition-colors">
+                <p className="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider mb-1">Member Since</p>
+                <p className="text-slate-900 dark:text-white font-medium text-lg">
                   {new Date(user.id ? Date.now() - user.id * 1000 : Date.now()).toLocaleDateString()}
                 </p>
               </div>
             </div>
           </div>
           
-          <div className="bg-slate-900/60 backdrop-blur-xl p-8 rounded-3xl border border-slate-800/60 shadow-xl">
-            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-emerald-400">⚙️</span>
+          <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl p-8 rounded-3xl border border-slate-200 dark:border-slate-800/60 shadow-xl transition-colors">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+              <span className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-emerald-500 dark:text-emerald-400">⚙️</span>
               Account Settings
             </h3>
             <div className="space-y-6">
-              <div className="flex items-center justify-between p-4 bg-slate-800/40 rounded-xl border border-slate-700/30">
-                <span className="text-slate-300 font-medium">Email Notifications</span>
-                <div className="w-12 h-7 bg-emerald-600 rounded-full relative cursor-pointer transition-colors hover:bg-emerald-500">
-                  <div className="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow-sm"></div>
-                </div>
-              </div>
-              <div className="flex items-center justify-between p-4 bg-slate-800/40 rounded-xl border border-slate-700/30">
-                <span className="text-slate-300 font-medium">Dark Mode</span>
-                <div className="w-12 h-7 bg-emerald-600 rounded-full relative cursor-pointer transition-colors hover:bg-emerald-500">
-                  <div className="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow-sm"></div>
-                </div>
+              <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-700/30 transition-colors">
+                <span className="text-slate-700 dark:text-slate-300 font-medium">Theme</span>
+                <ModeToggle />
               </div>
               
               <div className="pt-4 space-y-3">
                 <button 
                   onClick={handleOpenEditProfile}
-                  className="w-full py-3 bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 text-white text-sm font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 uppercase tracking-wide group relative overflow-hidden"
+                  className="w-full py-3 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-sm font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 uppercase tracking-wide group relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                  <Edit2 className="w-4 h-4 text-emerald-400 group-hover:text-emerald-300 transition-colors" />
-                  <span className="group-hover:text-emerald-300 transition-colors">Edit Profile</span>
+                  <Edit2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-500 dark:group-hover:text-emerald-300 transition-colors" />
+                  <span className="group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">Edit Profile</span>
                 </button>
                 
                 <button 
                   onClick={() => setShowPasswordModal(true)}
-                  className="w-full py-3 bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 text-white text-sm font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 uppercase tracking-wide group relative overflow-hidden"
+                  className="w-full py-3 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-sm font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 uppercase tracking-wide group relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                  <Lock className="w-4 h-4 text-emerald-400 group-hover:text-emerald-300 transition-colors" />
-                  <span className="group-hover:text-emerald-300 transition-colors">Change Password</span>
+                  <Lock className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-500 dark:group-hover:text-emerald-300 transition-colors" />
+                  <span className="group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">Change Password</span>
                 </button>
               </div>
             </div>
@@ -249,7 +242,7 @@ function Profile() {
         <div className="flex justify-center">
           <button 
             onClick={handleBack} 
-            className="w-full py-4 bg-slate-900/50 hover:bg-slate-800 text-slate-300 hover:text-white font-bold rounded-xl transition-all duration-300 border border-slate-800 hover:border-slate-700 flex items-center justify-center gap-2"
+            className="w-full py-4 bg-white/50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-bold rounded-xl transition-all duration-300 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 flex items-center justify-center gap-2"
           >
             ← Back to Dashboard
           </button>
@@ -259,11 +252,11 @@ function Profile() {
       {/* Edit Profile Modal */}
       {showEditProfileModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-slate-900/30 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 w-full max-w-md shadow-2xl transform transition-all scale-100 relative overflow-hidden">
+          <div className="bg-white/90 dark:bg-slate-900/30 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-3xl p-8 w-full max-w-md shadow-2xl transform transition-all scale-100 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
             <div className="relative z-10">
             <div className="flex justify-center items-center mb-8">
-              <h3 className="text-2xl font-bold text-white drop-shadow-md">Edit Profile</h3>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white drop-shadow-md">Edit Profile</h3>
             </div>
             
             {editProfileSuccess ? (
@@ -302,9 +295,9 @@ function Profile() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-400 mb-2">First Name</label>
+                  <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-2">First Name</label>
                   <div className="relative group/input">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within/input:text-emerald-400 transition-colors">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 group-focus-within/input:text-emerald-500 dark:group-focus-within/input:text-emerald-400 transition-colors">
                       <UserIcon size={20} />
                     </div>
                     <input 
@@ -312,14 +305,14 @@ function Profile() {
                       value={editFirstname}
                       onChange={(e) => setEditFirstname(e.target.value)}
                       required 
-                      className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-white placeholder-slate-600 transition-all"
+                      className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-400 mb-2">Last Name</label>
+                  <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-2">Last Name</label>
                   <div className="relative group/input">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within/input:text-emerald-400 transition-colors">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 group-focus-within/input:text-emerald-500 dark:group-focus-within/input:text-emerald-400 transition-colors">
                       <UserIcon size={20} />
                     </div>
                     <input 
@@ -327,16 +320,16 @@ function Profile() {
                       value={editLastname}
                       onChange={(e) => setEditLastname(e.target.value)}
                       required 
-                      className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-white placeholder-slate-600 transition-all"
+                      className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all"
                     />
                   </div>
                 </div>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">Email Address</label>
+                <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-2">Email Address</label>
                 <div className="relative group/input">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within/input:text-emerald-400 transition-colors">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 group-focus-within/input:text-emerald-500 dark:group-focus-within/input:text-emerald-400 transition-colors">
                     <Mail size={20} />
                   </div>
                   <input 
@@ -344,19 +337,19 @@ function Profile() {
                     value={editEmail}
                     onChange={(e) => setEditEmail(e.target.value)}
                     required 
-                    className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-white placeholder-slate-600 transition-all"
+                    className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all"
                   />
                 </div>
               </div>
               
               {editProfileError && (
-                <p className="text-red-400 text-sm bg-red-500/10 p-3 rounded-lg border border-red-500/20">
+                <p className="text-red-500 dark:text-red-400 text-sm bg-red-50 dark:bg-red-500/10 p-3 rounded-lg border border-red-200 dark:border-red-500/20">
                   {editProfileError}
                 </p>
               )}
               
               {editProfileSuccess && (
-                <p className="text-emerald-400 text-sm bg-emerald-500/10 p-3 rounded-lg border border-emerald-500/20">
+                <p className="text-emerald-600 dark:text-emerald-400 text-sm bg-emerald-50 dark:bg-emerald-500/10 p-3 rounded-lg border border-emerald-200 dark:border-emerald-500/20">
                   {editProfileSuccess}
                 </p>
               )}
@@ -364,7 +357,7 @@ function Profile() {
               <div className="flex gap-3 mt-8">
                 <button 
                   type="button" 
-                  className="flex-1 px-4 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-medium transition-colors" 
+                  className="flex-1 px-4 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white rounded-xl font-medium transition-colors" 
                   onClick={() => setShowEditProfileModal(false)}
                 >
                   Cancel
@@ -386,17 +379,17 @@ function Profile() {
       {/* Change Password Modal */}
       {showPasswordModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-slate-900/30 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 w-full max-w-md shadow-2xl transform transition-all scale-100 relative overflow-hidden">
+          <div className="bg-white/90 dark:bg-slate-900/30 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-3xl p-8 w-full max-w-md shadow-2xl transform transition-all scale-100 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
             <div className="relative z-10">
             <div className="flex justify-center items-center mb-8">
-              <h3 className="text-2xl font-bold text-white drop-shadow-md">Change Password</h3>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white drop-shadow-md">Change Password</h3>
             </div>
             <form className="space-y-6" onSubmit={handleChangePassword}>
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">Current Password</label>
+                <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-2">Current Password</label>
                 <div className="relative group/input">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within/input:text-emerald-400 transition-colors">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 group-focus-within/input:text-emerald-500 dark:group-focus-within/input:text-emerald-400 transition-colors">
                     <Lock size={20} />
                   </div>
                   <input 
@@ -404,10 +397,10 @@ function Profile() {
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     required 
-                    className="w-full pl-10 pr-16 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-white placeholder-slate-600 transition-all"
+                    className="w-full pl-10 pr-16 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all"
                   />
                   <span 
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 text-xs font-medium cursor-pointer select-none transition-colors uppercase tracking-wider"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-300 text-xs font-medium cursor-pointer select-none transition-colors uppercase tracking-wider"
                     onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                     onMouseDown={(e) => e.preventDefault()}
                   >
@@ -416,9 +409,9 @@ function Profile() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">New Password</label>
+                <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-2">New Password</label>
                 <div className="relative group/input">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within/input:text-emerald-400 transition-colors">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 group-focus-within/input:text-emerald-500 dark:group-focus-within/input:text-emerald-400 transition-colors">
                     <Lock size={20} />
                   </div>
                   <input 
@@ -426,10 +419,10 @@ function Profile() {
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     required 
-                    className="w-full pl-10 pr-16 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-white placeholder-slate-600 transition-all"
+                    className="w-full pl-10 pr-16 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all"
                   />
                   <span 
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 text-xs font-medium cursor-pointer select-none transition-colors uppercase tracking-wider"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-300 text-xs font-medium cursor-pointer select-none transition-colors uppercase tracking-wider"
                     onClick={() => setShowNewPassword(!showNewPassword)}
                     onMouseDown={(e) => e.preventDefault()}
                   >
@@ -438,9 +431,9 @@ function Profile() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">Confirm New Password</label>
+                <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-2">Confirm New Password</label>
                 <div className="relative group/input">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within/input:text-emerald-400 transition-colors">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 group-focus-within/input:text-emerald-500 dark:group-focus-within/input:text-emerald-400 transition-colors">
                     <Lock size={20} />
                   </div>
                   <input 
@@ -448,10 +441,10 @@ function Profile() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required 
-                    className="w-full pl-10 pr-16 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-white placeholder-slate-600 transition-all"
+                    className="w-full pl-10 pr-16 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all"
                   />
                   <span 
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 text-xs font-medium cursor-pointer select-none transition-colors uppercase tracking-wider"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-300 text-xs font-medium cursor-pointer select-none transition-colors uppercase tracking-wider"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     onMouseDown={(e) => e.preventDefault()}
                   >
@@ -461,13 +454,13 @@ function Profile() {
               </div>
               
               {passwordError && (
-                <p className="text-red-400 text-sm bg-red-500/10 p-3 rounded-lg border border-red-500/20">
+                <p className="text-red-500 dark:text-red-400 text-sm bg-red-50 dark:bg-red-500/10 p-3 rounded-lg border border-red-200 dark:border-red-500/20">
                   {passwordError}
                 </p>
               )}
               
               {passwordSuccess && (
-                <p className="text-emerald-400 text-sm bg-emerald-500/10 p-3 rounded-lg border border-emerald-500/20">
+                <p className="text-emerald-600 dark:text-emerald-400 text-sm bg-emerald-50 dark:bg-emerald-500/10 p-3 rounded-lg border border-emerald-200 dark:border-emerald-500/20">
                   {passwordSuccess}
                 </p>
               )}
@@ -475,7 +468,7 @@ function Profile() {
               <div className="flex gap-3 mt-8">
                 <button 
                   type="button" 
-                  className="flex-1 px-4 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-medium transition-colors" 
+                  className="flex-1 px-4 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white rounded-xl font-medium transition-colors" 
                   onClick={() => setShowPasswordModal(false)}
                 >
                   Cancel

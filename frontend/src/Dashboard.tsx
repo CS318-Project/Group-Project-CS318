@@ -6,6 +6,7 @@ import { useDashboardData } from './hooks/useDashboardData';
 import { Expense } from './types';
 import { expenseAPI } from './api';
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { ModeToggle } from "@/components/mode-toggle";
 import {  
   LogOut, 
   Plus, 
@@ -30,7 +31,8 @@ import {
   Layers,
   ChevronDown,
   Check,
-  Filter
+  Filter,
+  History
 } from 'lucide-react';
 
 const categories = ['Food', 'Transport', 'Entertainment', 'Utilities', 'Shopping', 'Health', 'Education', 'Travel', 'Other'];
@@ -390,22 +392,23 @@ function Main() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black flex flex-col overflow-y-auto">
+    <div className="min-h-screen w-full bg-slate-50 dark:bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-slate-950 dark:to-black flex flex-col overflow-y-auto transition-colors duration-300">
       <div id="dashboard-content" className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <header className="flex justify-between items-center mb-12">
+        <header className="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-12 gap-6 md:gap-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
+            <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/20">
               <Wallet className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-white tracking-tight">Dashboard</h1>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Dashboard</h1>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 w-full md:w-auto justify-center md:justify-end">
+            <ModeToggle />
             <button 
               onClick={() => navigate('/profile')}
-              className="group flex items-center gap-3 pl-2 pr-5 py-2 bg-slate-900/30 hover:bg-emerald-500/10 border border-white/10 hover:border-emerald-500/50 rounded-full transition-all duration-300 backdrop-blur-md"
+              className="group relative w-10 h-10 rounded-full overflow-hidden border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 transition-all duration-300 shadow-lg ring-2 ring-transparent hover:ring-emerald-400/50"
             >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center text-white font-bold text-xs shadow-lg overflow-hidden ring-2 ring-transparent group-hover:ring-emerald-400/50 transition-all">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center text-white font-bold text-xs">
                 {user?.profilePicture ? (
                   <img 
                     src={`data:image/jpeg;base64,${user.profilePicture}`} 
@@ -416,13 +419,10 @@ function Main() {
                   <span>{user?.firstname?.charAt(0)}{user?.lastname?.charAt(0)}</span>
                 )}
               </div>
-              <span className="text-sm font-bold text-slate-300 group-hover:text-emerald-400 transition-colors hidden sm:block whitespace-nowrap">
-                {user?.firstname} {user?.lastname}
-              </span>
             </button>
             <button 
               onClick={handleLogout} 
-              className="group relative px-5 py-2.5 bg-slate-900/30 backdrop-blur-2xl hover:bg-red-500/10 text-slate-300 hover:text-red-400 rounded-full font-bold transition-all duration-300 border border-white/10 hover:border-red-500/50 shadow-lg hover:shadow-red-500/20 active:scale-95 overflow-hidden"
+              className="group relative px-8 py-2.5 bg-white/50 dark:bg-slate-900/30 backdrop-blur-2xl hover:bg-red-500/10 text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 rounded-full font-bold text-sm transition-all duration-300 border border-slate-200 dark:border-white/10 hover:border-red-500/50 shadow-lg hover:shadow-red-500/20 active:scale-95 overflow-hidden flex items-center justify-center"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
               <div className="relative z-10 flex items-center gap-2">
@@ -435,42 +435,42 @@ function Main() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-800/60 shadow-xl relative overflow-hidden group">
+          <div className="bg-white dark:bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-slate-800/60 shadow-xl relative overflow-hidden group transition-colors">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <DollarSign className="w-24 h-24 text-green-400" />
+              <DollarSign className="w-24 h-24 text-green-500 dark:text-green-400" />
             </div>
             <div className="relative z-10">
-              <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider mb-1">Total Expenses</h3>
-              <p className="text-4xl font-bold text-white">${totalExpenses.toFixed(2)}</p>
-              <div className="mt-4 flex items-center gap-2 text-green-400 text-sm">
+              <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider mb-1">Total Expenses</h3>
+              <p className="text-4xl font-bold text-slate-900 dark:text-white">${totalExpenses.toFixed(2)}</p>
+              <div className="mt-4 flex items-center gap-2 text-green-500 dark:text-green-400 text-sm">
                 <TrendingUp className="w-4 h-4" />
                 <span>Lifetime spending</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-800/60 shadow-xl relative overflow-hidden group">
+          <div className="bg-white dark:bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-slate-800/60 shadow-xl relative overflow-hidden group transition-colors">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Calendar className="w-24 h-24 text-blue-400" />
+              <Calendar className="w-24 h-24 text-blue-500 dark:text-blue-400" />
             </div>
             <div className="relative z-10">
-              <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider mb-1">Selected Month</h3>
-              <p className="text-4xl font-bold text-white">${selectedMonthTotal.toFixed(2)}</p>
-              <div className="mt-4 flex items-center gap-2 text-blue-400 text-sm">
+              <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider mb-1">Selected Month</h3>
+              <p className="text-4xl font-bold text-slate-900 dark:text-white">${selectedMonthTotal.toFixed(2)}</p>
+              <div className="mt-4 flex items-center gap-2 text-blue-500 dark:text-blue-400 text-sm">
                 <Activity className="w-4 h-4" />
                 <span>{new Date(selectedMonth).toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-800/60 shadow-xl relative overflow-hidden group">
+          <div className="bg-white dark:bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-slate-800/60 shadow-xl relative overflow-hidden group transition-colors">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <PieChartIcon className="w-24 h-24 text-purple-400" />
+              <PieChartIcon className="w-24 h-24 text-purple-500 dark:text-purple-400" />
             </div>
             <div className="relative z-10">
-              <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider mb-1">Categories</h3>
-              <p className="text-4xl font-bold text-white">{categoryCount}</p>
-              <div className="mt-4 flex items-center gap-2 text-purple-400 text-sm">
+              <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider mb-1">Categories</h3>
+              <p className="text-4xl font-bold text-slate-900 dark:text-white">{categoryCount}</p>
+              <div className="mt-4 flex items-center gap-2 text-purple-500 dark:text-purple-400 text-sm">
                 <CreditCard className="w-4 h-4" />
                 <span>Active categories</span>
               </div>
@@ -479,31 +479,31 @@ function Main() {
         </div>
         
         {/* Filters Section */}
-        <div className="mb-8 relative bg-slate-900/30 backdrop-blur-2xl p-6 rounded-3xl border border-white/10 shadow-xl overflow-visible z-20">
+        <div className="mb-8 relative bg-white/50 dark:bg-slate-900/30 backdrop-blur-2xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-xl overflow-visible z-20 transition-colors">
           <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-3xl"></div>
           <div className="relative z-10 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <Filter className="w-5 h-5 text-emerald-400" />
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Filter className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
               Filters
             </h3>
             
             <div className="flex items-center gap-3">
-              <span className="text-slate-400 text-sm font-medium mr-2">Period:</span>
+              <span className="text-slate-500 dark:text-slate-400 text-sm font-medium mr-2">Period:</span>
               
               {/* Month Dropdown */}
               <div className="relative">
                 <button
                   onClick={() => { setIsMonthOpen(!isMonthOpen); setIsYearOpen(false); }}
-                  className="min-w-[140px] px-4 py-2.5 bg-slate-800/50 border border-slate-700 rounded-xl flex items-center justify-between hover:bg-slate-800 transition-all focus:ring-2 focus:ring-emerald-500/50 outline-none group"
+                  className="min-w-[140px] px-4 py-2.5 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition-all focus:ring-2 focus:ring-emerald-500/50 outline-none group"
                 >
-                  <span className="font-medium text-white">
+                  <span className="font-medium text-slate-900 dark:text-white">
                     {months.find(m => m.value === selectedMonth.split('-')[1])?.label || 'Month'}
                   </span>
                   <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isMonthOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
                 {isMonthOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-full bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl overflow-hidden max-h-60 overflow-y-auto custom-scrollbar z-50">
+                  <div className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-xl shadow-xl overflow-hidden max-h-60 overflow-y-auto custom-scrollbar z-50">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
                     <div className="relative z-10 p-1">
                       {months.map(month => (
@@ -516,8 +516,8 @@ function Main() {
                           }}
                           className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                             selectedMonth.split('-')[1] === month.value 
-                              ? 'bg-emerald-500/20 text-emerald-400' 
-                              : 'text-slate-300 hover:bg-white/5'
+                              ? 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' 
+                              : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
                           }`}
                         >
                           {month.label}
@@ -532,16 +532,16 @@ function Main() {
               <div className="relative">
                 <button
                   onClick={() => { setIsYearOpen(!isYearOpen); setIsMonthOpen(false); }}
-                  className="min-w-[100px] px-4 py-2.5 bg-slate-800/50 border border-slate-700 rounded-xl flex items-center justify-between hover:bg-slate-800 transition-all focus:ring-2 focus:ring-emerald-500/50 outline-none group"
+                  className="min-w-[100px] px-4 py-2.5 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition-all focus:ring-2 focus:ring-emerald-500/50 outline-none group"
                 >
-                  <span className="font-medium text-white">
+                  <span className="font-medium text-slate-900 dark:text-white">
                     {selectedMonth.split('-')[0]}
                   </span>
                   <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isYearOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
                 {isYearOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-full bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl overflow-hidden max-h-60 overflow-y-auto custom-scrollbar z-50">
+                  <div className="absolute top-full right-0 mt-2 w-full bg-white dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-xl shadow-xl overflow-hidden max-h-60 overflow-y-auto custom-scrollbar z-50">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
                     <div className="relative z-10 p-1">
                       {years.map(year => (
@@ -554,8 +554,8 @@ function Main() {
                           }}
                           className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                             parseInt(selectedMonth.split('-')[0]) === year 
-                              ? 'bg-emerald-500/20 text-emerald-400' 
-                              : 'text-slate-300 hover:bg-white/5'
+                              ? 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' 
+                              : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
                           }`}
                         >
                           {year}
@@ -572,31 +572,31 @@ function Main() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
           {/* Charts Section */}
-          <div id="charts-section" className="lg:col-span-2 bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-800/60 shadow-xl">
+          <div id="charts-section" className="lg:col-span-2 bg-white/50 dark:bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-slate-800/60 shadow-xl transition-colors">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-              <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <Activity className="w-5 h-5 text-blue-400" />
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Activity className="w-5 h-5 text-blue-500 dark:text-blue-400" />
                 Analytics
               </h3>
-              <div className="relative bg-slate-900/30 backdrop-blur-2xl border border-white/10 p-1.5 rounded-full overflow-hidden">
+              <div className="relative bg-slate-100 dark:bg-slate-900/30 backdrop-blur-2xl border border-slate-200 dark:border-white/10 p-1.5 rounded-xl sm:rounded-full overflow-x-auto max-w-full transition-colors">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
-                <div className="relative z-10 flex items-center">
+                <div className="relative z-10 flex items-center min-w-max">
                   <button 
                     onClick={handleDownloadPDF}
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 transition-all"
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-emerald-500 dark:text-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-300 hover:bg-emerald-500/10 transition-all flex-shrink-0"
                     title="Download PDF"
                   >
                     <Download className="w-5 h-5" />
                   </button>
-                  <div className="w-px h-4 bg-white/10 mx-1"></div>
+                  <div className="w-px h-4 bg-slate-300 dark:bg-white/10 mx-1"></div>
                   {(['daily', 'weekly', 'monthly'] as const).map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setChartTab(tab)}
-                      className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${
+                      className={`px-4 sm:px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap ${
                         chartTab === tab 
                           ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/25 scale-105' 
-                          : 'text-slate-400 hover:text-white hover:bg-white/5'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/5'
                       }`}
                     >
                       {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -682,7 +682,7 @@ function Main() {
             {/* Quick Add */}
             <button 
               onClick={handleAddExpense}
-              className="w-full relative py-4 bg-slate-900/30 backdrop-blur-2xl hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 rounded-3xl font-bold text-lg border border-white/10 hover:border-emerald-500/30 shadow-xl shadow-emerald-500/10 transition-all transform hover:scale-[1.02] overflow-hidden group"
+              className="w-full relative py-4 bg-white/50 dark:bg-slate-900/30 backdrop-blur-2xl hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 rounded-3xl font-bold text-lg border border-slate-200 dark:border-white/10 hover:border-emerald-500/30 shadow-xl shadow-emerald-500/5 dark:shadow-emerald-500/10 transition-all transform hover:scale-[1.02] overflow-hidden group"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
               <div className="relative z-10 flex items-center justify-center gap-2">
@@ -692,11 +692,11 @@ function Main() {
             </button>
 
             {/* Recent List */}
-            <div className="flex-1 bg-slate-900/30 backdrop-blur-2xl p-6 rounded-3xl border border-white/10 shadow-xl overflow-hidden flex flex-col relative">
+            <div className="flex-1 bg-white/50 dark:bg-slate-900/30 backdrop-blur-2xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-xl overflow-hidden flex flex-col relative transition-colors">
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
               <div className="relative z-10 flex flex-col h-full">
-              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-green-400" />
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                <History className="w-5 h-5 text-purple-500 dark:text-purple-400" />
                 Recent
               </h3>
               <div className="overflow-y-auto pr-2 space-y-3 custom-scrollbar flex-1 max-h-[400px]">
@@ -748,18 +748,18 @@ function Main() {
 
 
 
-        {/* All Transactions Table */}
-        <section id="history-section" className="bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-800/60 shadow-xl">
+        {/* Transaction History Table */}
+        <section id="history-section" className="bg-white/50 dark:bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-slate-800/60 shadow-xl transition-colors">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-purple-400" />
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <History className="w-5 h-5 text-purple-500 dark:text-purple-400" />
               Transaction History
             </h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-700/50 text-slate-400 text-sm uppercase tracking-wider">
+                <tr className="border-b border-slate-200 dark:border-slate-700/50 text-slate-500 dark:text-slate-400 text-sm uppercase tracking-wider">
                   <th className="p-4 font-medium">Description</th>
                   <th className="p-4 font-medium">Category</th>
                   <th className="p-4 font-medium">Date</th>
@@ -767,27 +767,27 @@ function Main() {
                   <th className="p-4 font-medium text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="text-slate-300 divide-y divide-slate-700/30">
+              <tbody className="text-slate-600 dark:text-slate-300 divide-y divide-slate-200 dark:divide-slate-700/30">
                 {expenses
                   .filter(expense => expense.date.startsWith(selectedMonth))
                   .map((expense) => (
-                  <tr key={expense.id} className="hover:bg-slate-800/30 transition-colors">
-                    <td className="p-4 font-medium text-white">{expense.description}</td>
+                  <tr key={expense.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                    <td className="p-4 font-medium text-slate-900 dark:text-white">{expense.description}</td>
                     <td className="p-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-800 border border-slate-700 text-slate-300">
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">
                         {expense.category.name}
                       </span>
                     </td>
-                    <td className="p-4 text-slate-400">
+                    <td className="p-4 text-slate-500 dark:text-slate-400">
                       {new Date(expense.date).toLocaleDateString()}
-                      {expense.time && <span className="ml-2 text-slate-500 text-xs">{expense.time.substring(0, 5)}</span>}
+                      {expense.time && <span className="ml-2 text-slate-400 dark:text-slate-500 text-xs">{expense.time.substring(0, 5)}</span>}
                     </td>
-                    <td className="p-4 text-right font-bold text-white">${expense.amount.toFixed(2)}</td>
+                    <td className="p-4 text-right font-bold text-slate-900 dark:text-white">${expense.amount.toFixed(2)}</td>
                     <td className="p-4 text-right">
                       <div className="flex justify-end gap-3">
                         <button 
                           onClick={() => handleEditExpense(expense)} 
-                          className="group flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 hover:text-blue-300 rounded-lg transition-all border border-blue-500/20 hover:border-blue-500/40"
+                          className="group flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 rounded-lg transition-all border border-blue-500/20 hover:border-blue-500/40"
                           title="Edit Expense"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
@@ -795,7 +795,7 @@ function Main() {
                         </button>
                         <button 
                           onClick={() => handleDeleteExpense(expense.id)} 
-                          className="group flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 rounded-lg transition-all border border-red-500/20 hover:border-red-500/40"
+                          className="group flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 rounded-lg transition-all border border-red-500/20 hover:border-red-500/40"
                           title="Delete Expense"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -807,7 +807,7 @@ function Main() {
                 ))}
                 {expenses.filter(expense => expense.date.startsWith(selectedMonth)).length === 0 && (
                   <tr>
-                    <td colSpan={5} className="p-8 text-center text-slate-500">
+                    <td colSpan={5} className="p-8 text-center text-slate-500 dark:text-slate-400">
                       No transactions found for this month.
                     </td>
                   </tr>
@@ -821,19 +821,19 @@ function Main() {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-slate-900/30 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 w-full max-w-lg shadow-2xl transform transition-all scale-100 relative overflow-hidden">
+          <div className="bg-white/90 dark:bg-slate-900/30 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-3xl p-6 md:p-8 w-full max-w-lg shadow-2xl transform transition-all scale-100 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
             <div className="relative z-10">
-            <div className="flex justify-center items-center mb-8">
-              <h3 className="text-2xl font-bold text-white drop-shadow-md">{editingExpense ? 'Edit Expense' : 'New Expense'}</h3>
+            <div className="flex justify-center items-center mb-6 md:mb-8">
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white drop-shadow-md">{editingExpense ? 'Edit Expense' : 'New Expense'}</h3>
             </div>
             
             <form className="space-y-6" onSubmit={handleSubmit}>
               {/* Amount Input - Prominent */}
               <div className="relative">
-                <label className="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 ml-1">Amount</label>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1">Amount</label>
                 <div className="relative group">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl font-medium group-focus-within:text-emerald-500 transition-colors">$</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 text-xl font-medium group-focus-within:text-emerald-500 transition-colors">$</span>
                   <input 
                     type="number" 
                     name="amount" 
@@ -842,25 +842,25 @@ function Main() {
                     required 
                     step="0.01" 
                     placeholder="0.00"
-                    className="w-full pl-10 pr-4 py-4 bg-slate-800/50 border border-slate-700 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-white text-3xl font-bold placeholder-slate-600 transition-all"
+                    className="w-full pl-10 pr-4 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-slate-900 dark:text-white text-3xl font-bold placeholder-slate-400 dark:placeholder-slate-600 transition-all"
                   />
                 </div>
               </div>
 
               {/* Category Dropdown - Custom */}
               <div className="relative">
-                <label className="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 ml-1">Category</label>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1">Category</label>
                 <button
                   type="button"
                   onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl flex items-center justify-between hover:bg-slate-800 transition-all focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none group"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800 transition-all focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none group"
                 >
-                  <span className="font-bold text-emerald-400">{formData.categoryName}</span>
-                  <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isCategoryOpen ? 'rotate-180' : ''}`} />
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">{formData.categoryName}</span>
+                  <ChevronDown className={`w-5 h-5 text-slate-400 dark:text-slate-500 transition-transform ${isCategoryOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
                 {isCategoryOpen && (
-                  <div className="absolute z-10 mt-2 w-full bg-slate-800 border border-slate-700 rounded-xl shadow-xl overflow-hidden max-h-60 overflow-y-auto custom-scrollbar">
+                  <div className="absolute z-10 mt-2 w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl overflow-hidden max-h-60 overflow-y-auto custom-scrollbar">
                     <div className="p-1.5 space-y-1">
                       {categories.map(cat => (
                         <button
@@ -870,7 +870,7 @@ function Main() {
                             setFormData({...formData, categoryName: cat});
                             setIsCategoryOpen(false);
                           }}
-                          className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all ${formData.categoryName === cat ? 'bg-emerald-500/10 text-emerald-400' : 'hover:bg-slate-700/50 text-slate-300'}`}
+                          className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all ${formData.categoryName === cat ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'hover:bg-slate-100 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300'}`}
                         >
                           <span className="font-medium text-sm flex-1 text-left">{cat}</span>
                           {formData.categoryName === cat && <Check className="w-4 h-4 flex-shrink-0" />}
@@ -883,7 +883,7 @@ function Main() {
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 ml-1">Description</label>
+                <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1">Description</label>
                 <input 
                   type="text" 
                   name="description" 
@@ -891,42 +891,42 @@ function Main() {
                   onChange={handleInputChange} 
                   required 
                   placeholder="What was this for?"
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-white placeholder-slate-600 transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all"
                 />
               </div>
 
               {/* Date & Time */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 ml-1">Date</label>
+                  <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1">Date</label>
                   <input 
                     type="date" 
                     name="date" 
                     value={formData.date} 
                     onChange={handleInputChange} 
                     required 
-                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-white placeholder-slate-600 transition-all"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all [color-scheme:light] dark:[color-scheme:dark]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 ml-1">Time</label>
+                  <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1">Time</label>
                   <input 
                     type="time" 
                     name="time" 
                     value={formData.time} 
                     onChange={handleInputChange} 
                     required 
-                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-white placeholder-slate-600 transition-all"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 transition-all [color-scheme:light] dark:[color-scheme:dark]"
                   />
                 </div>
               </div>
 
-              {errorMessage && <p className="text-red-400 text-sm bg-red-500/10 p-3 rounded-lg border border-red-500/20 flex items-center gap-2">⚠️ {errorMessage}</p>}
+              {errorMessage && <p className="text-red-500 dark:text-red-400 text-sm bg-red-50 dark:bg-red-500/10 p-3 rounded-lg border border-red-200 dark:border-red-500/20 flex items-center gap-2">⚠️ {errorMessage}</p>}
               
-              <div className="flex gap-3 mt-8 pt-4 border-t border-slate-800">
+              <div className="flex gap-3 mt-8 pt-4 border-t border-slate-200 dark:border-slate-800">
                 <button 
                   type="button" 
-                  className="flex-1 px-4 py-3.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-medium transition-colors" 
+                  className="flex-1 px-4 py-3.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white rounded-xl font-medium transition-colors" 
                   onClick={() => setShowModal(false)}
                 >
                   Cancel

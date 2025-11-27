@@ -42,8 +42,8 @@ function Register() {
 
   return (
     <WavyBackground 
-      className="w-full h-full flex flex-col items-center justify-center"
-      containerClassName="h-screen"
+      className="w-full h-full flex flex-col items-center justify-center py-12"
+      containerClassName=""
       backgroundFill="black"
       colors={WAVY_COLORS}
       waveOpacity={0.5}
