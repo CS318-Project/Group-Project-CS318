@@ -18,6 +18,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 1600,
   },
   server: {
+    host: true, // Listen on all local IPs
     proxy: {
       // Proxy API requests to the Spring Boot backend during development
       '/api': {
