@@ -99,6 +99,29 @@ export const expenseAPI = {
   },
 };
 
+// Income API
+export const incomeAPI = {
+  getAllIncome: async () => {
+    const response = await api.get('/income');
+    return response.data;
+  },
+  getIncomeById: async (id: number) => {
+    const response = await api.get(`/income/${id}`);
+    return response.data;
+  },
+  createIncome: async (income: any) => {
+    const response = await api.post('/income', income);
+    return response.data;
+  },
+  updateIncome: async (id: number, income: any) => {
+    const response = await api.put(`/income/${id}`, income);
+    return response.data;
+  },
+  deleteIncome: async (id: number) => {
+    await api.delete(`/income/${id}`);
+  },
+};
+
 // Report API
 export const reportAPI = {
   getDailyReport: async () => {
@@ -115,6 +138,14 @@ export const reportAPI = {
   },
   getSummary: async () => {
     const response = await api.get('/reports/summary');
+    return response.data;
+  },
+  getIncomeSummary: async () => {
+    const response = await api.get('/reports/income-summary');
+    return response.data;
+  },
+  getBalance: async () => {
+    const response = await api.get('/reports/balance');
     return response.data;
   },
 };
